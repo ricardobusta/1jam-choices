@@ -1,0 +1,3 @@
+[submodule "harpia-game-engine"]
+	path = harpia-game-engine
+	url = git@github.com:ricardobusta/harpia-game-engine.git
