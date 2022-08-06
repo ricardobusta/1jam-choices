@@ -11,9 +11,10 @@ using namespace Harpia;
 
 namespace Jam {
     class InitScene : public Harpia::Scene {
+        HARPIA_SCENE
     public:
         void Load(Application *application) override;
     };
-} // Jam
+}// namespace Jam
 
-#endif //INC_1JAMCHOICES_INIT_SCENE_H
+#endif//INC_1JAMCHOICES_INIT_SCENE_H

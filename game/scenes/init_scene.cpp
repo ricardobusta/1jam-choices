@@ -6,7 +6,7 @@
 #include "hge/camera_component.h"
 #include "hge/assets.h"
 #include "hge/text_renderer_component.h"
-#include "hge/harpia_math.h"
+#include "init_game.h"
 
 namespace Jam {
     void InitScene::Load(Application *application) {
@@ -25,6 +25,9 @@ namespace Jam {
         auto textRenderer = textObject->AddComponent<TextRendererComponent>();
         textRenderer->SetFontMaterial(fontMaterial, 7, 9);
         textRenderer->SetText("loading...");
-        textObject->transform.SetPosition({-textRenderer->GetSize().x/2,0});
+        textObject->transform.SetPosition({-textRenderer->GetSize().x/2,-textRenderer->GetSize().y/2});
+
+        auto controllerObject = CreateObject("Controller Object");
+        controllerObject->AddComponent<InitGame>();
     }
 } // Jam

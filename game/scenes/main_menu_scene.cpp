@@ -6,6 +6,5 @@
 
 namespace Jam {
     void MainMenuScene::Load(Application *application) {
-
     }
-} // Jam
+}// namespace Jam
