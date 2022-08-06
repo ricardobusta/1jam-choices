@@ -10,7 +10,7 @@
 
 namespace Jam {
     void InitScene::Load(Application *application) {
-        auto camera = CreateSimpleOrthoCamera(5);
+        auto camera = CreateSimpleOrthoCamera(10);
         camera->SetClearColor(Color::darkGray);
 
         auto fontAtlas = LoadTextureAsset("assets/fonts/pixel.png");
@@ -24,7 +24,7 @@ namespace Jam {
         auto textObject = CreateObject("Text");
         auto textRenderer = textObject->AddComponent<TextRendererComponent>();
         textRenderer->SetFontMaterial(fontMaterial, 7, 9);
-        textRenderer->SetText("Choices");
+        textRenderer->SetText("loading...");
         textObject->transform.SetPosition({-textRenderer->GetSize().x/2,0});
     }
 } // Jam
