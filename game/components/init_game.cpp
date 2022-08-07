@@ -6,8 +6,17 @@
 
 #include "init_game.h"
 namespace Jam {
+    void InitGame::Start() {
+        DebugLog("Starting");
+        _loadTime = 0;
+    }
+
     void InitGame::Update() {
-        DebugLog("Loading scene 1");
-        SceneManager()->LoadScene(1);
+        DebugLog("%f %f", _loadTime, Time()->deltaTime);
+        if (_loadTime < 1) {
+            _loadTime += Time()->deltaTime;
+        } else {
+            SceneManager()->LoadScene(1);
+        }
     }
 }// namespace Jam

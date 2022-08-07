@@ -10,8 +10,11 @@
 using namespace Harpia;
 namespace Jam {
     class InitGame : public Component {
-    public:
+    private:
+        float _loadTime = 0;
 
+    public:
+        void Start() override;
         void Update() override;
     };
 }// namespace Jam

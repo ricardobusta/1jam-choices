@@ -13,6 +13,7 @@ namespace Jam {
         configuration.game.title = "Harpia Sample";
 
         configuration.window.size = Harpia::Vector2Int(800, 600);
+        configuration.window.resizeable = true;
 
         configuration.input.mappedKeys.insert(configuration.input.mappedKeys.end(), {
                 SDLK_UP, SDLK_DOWN, SDLK_LEFT, SDLK_RIGHT, SDLK_w, SDLK_a, SDLK_s, SDLK_d

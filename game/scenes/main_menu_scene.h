@@ -14,6 +14,9 @@ namespace Jam {
         HARPIA_SCENE
     public:
         void Load(Application *application) override;
+
+    private:
+        Object *CreateCenteredText(const std::string &text, MaterialAsset *material, float y, float scale);
     };
 }// namespace Jam
 
