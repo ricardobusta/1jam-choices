@@ -12,7 +12,6 @@ namespace Jam {
     }
 
     void InitGame::Update() {
-        DebugLog("%f %f", _loadTime, Time()->deltaTime);
         if (_loadTime < 1) {
             _loadTime += Time()->deltaTime;
         } else {

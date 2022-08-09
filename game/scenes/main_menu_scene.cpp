@@ -26,7 +26,7 @@ namespace Jam {
         fontMaterial->SetColor(Color::white);
         fontMaterial->_transparent = true;
 
-        CreateCenteredText("Choices Ships", fontMaterial, sizeV / 2, 1.5f);
+        CreateCenteredText("Choices 1Jam", fontMaterial, sizeV / 2, 1.5f);
         CreateCenteredText("Game by Ricardo Bustamante <ricardo@busta.dev>", fontMaterial, -sizeV+1, 0.65f);
     }
 
