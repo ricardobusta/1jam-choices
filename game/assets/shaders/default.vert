@@ -10,7 +10,9 @@ out vec3 vs_normal;
 out vec2 vs_uv;
 
 void main() {
-    gl_Position = harpia_ObjectToCamera * harpia_WorldToObject * vec4(in_position, 1.0);
+    vec4 pos = harpia_WorldToObject * vec4(in_position, 1.0);
+    float v = 35.0f;
+    gl_Position = harpia_ObjectToCamera * pos;//(round(pos*v)/v);
     vs_normal = (harpia_ObjectToCamera * harpia_WorldToObject * vec4(normalize(in_normal), 0.0)).xyz;
     vs_uv = in_uv;
 }

@@ -8,10 +8,11 @@
 #include "hge/assets.h"
 #include "hge/camera_component.h"
 #include "hge/text_renderer_component.h"
+#include "rotate_around.h"
 
 enum CameraLayer : int {
-    Ui = 1,
-    Game = 2,
+    Ui = 1<<0,
+    Game = 1<<1,
 };
 
 namespace Jam {
@@ -20,9 +21,9 @@ namespace Jam {
         auto aspect = application->GetScreenAspect();
         auto sizeH = sizeV * aspect;
 
-        auto gameCamera = CreateSimplePerspectiveCamera(60, 0.1f, 100, {0, 0, 15}, 15);
-        gameCamera->SetClearColor(Color(111, 98, 139, 255));
-        gameCamera->SetLayerMask(CameraLayer::Game);
+        auto shipCamera = CreateSimplePerspectiveCamera(30, 0.1f, 100, {0, 9, 12}, -35);
+        shipCamera->SetClearColor(Color(111, 98, 139, 255));
+        shipCamera->SetLayerMask(CameraLayer::Game);
 
         auto uiCamera = CreateSimpleOrthoCamera(sizeV);
         uiCamera->SetClearType(Harpia::CameraClearType::Depth);
@@ -37,10 +38,10 @@ namespace Jam {
         fontMaterial->SetColor(Color::white);
         fontMaterial->_transparent = true;
 
-        CreateCenteredText("Choices 1Jam", fontMaterial, sizeV / 2, 1.5f);
+        CreateCenteredText("Space Game", fontMaterial, sizeV / 2, 1.5f);
         CreateCenteredText("Game by Ricardo Bustamante <ricardo@busta.dev>", fontMaterial, -sizeV + 1, 0.65f);
 
-        std::map<std::string, MeshAsset *> meshCollection;
+        std::map<std::string, MeshAsset *, std::less<>> meshCollection;
         if (!LoadFbxMeshAssets("assets/models/ships.fbx", meshCollection)) {
             DebugLogError("Error!");
         }
@@ -60,9 +61,24 @@ namespace Jam {
         auto smallShip = CreateObject("SmallShip");
         auto smallShipRenderer = smallShip->AddComponent<RendererComponent>();
         smallShipRenderer->SetLayerMask(CameraLayer::Game);
-
         smallShipRenderer->SetMaterial(shipMaterial);
         smallShipRenderer->SetMesh(smallShipModel);
+        smallShip->transform.SetPosition({2,0,0});
+
+        auto rotateSmall = smallShip->AddComponent<RotateAround>();
+        rotateSmall->target = &smallShip->transform;
+        rotateSmall->speed = {0, 20, 0};
+
+        auto bigShip = CreateObject("BigShip");
+        auto bigShipRenderer = bigShip->AddComponent<RendererComponent>();
+        bigShipRenderer->SetLayerMask(CameraLayer::Game);
+        bigShipRenderer->SetMaterial(shipMaterial);
+        bigShipRenderer->SetMesh(bigShipModel);
+        bigShip->transform.SetPosition({-2,0,0});
+
+        auto rotateBig = bigShip->AddComponent<RotateAround>();
+        rotateBig->target = &bigShip->transform;
+        rotateBig->speed = {0, 20, 0};
     }
 
     Object *MainMenuScene::CreateCenteredText(const std::string &text, MaterialAsset *material, float y, float scale) {

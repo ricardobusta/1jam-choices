@@ -10,7 +10,7 @@
 
 namespace Jam {
     void GameConfig::Configure(Harpia::Configuration &configuration) {
-        configuration.game.title = "Harpia Sample";
+        configuration.game.title = "Space Game";
 
         configuration.window.position = Harpia::Vector2Int (2350, 000);
         configuration.window.overridePosition = true;
