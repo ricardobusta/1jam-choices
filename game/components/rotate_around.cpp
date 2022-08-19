@@ -13,9 +13,5 @@ namespace Jam {
         target->SetRotation(_t * speed.x * Math::Deg2Rad, {1, 0, 0});
         target->Rotate(_t * speed.y * Math::Deg2Rad, {0, 1, 0});
         target->Rotate(_t * speed.z * Math::Deg2Rad, {0, 0, 1});
-
-        if(Input()->GetKeyDown(SDLK_F5)){
-            SceneManager()->LoadScene(1);
-        }
     }
 }// namespace Jam

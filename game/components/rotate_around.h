@@ -16,7 +16,6 @@ namespace Jam {
         Harpia::Vector3 speed;
         Harpia::Transform *target;
 
-    public:
         void Update() override;
     };
 }// namespace Jam

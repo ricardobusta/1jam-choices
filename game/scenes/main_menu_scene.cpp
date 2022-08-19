@@ -9,10 +9,11 @@
 #include "hge/camera_component.h"
 #include "hge/text_renderer_component.h"
 #include "rotate_around.h"
+#include "main_menu_controller.h"
 
 enum CameraLayer : int {
-    Ui = 1<<0,
-    Game = 1<<1,
+    Ui = 1 << 0,
+    Game = 1 << 1,
 };
 
 namespace Jam {
@@ -21,7 +22,7 @@ namespace Jam {
         auto aspect = application->GetScreenAspect();
         auto sizeH = sizeV * aspect;
 
-        auto shipCamera = CreateSimplePerspectiveCamera(30, 0.1f, 100, {0, 9, 12}, -35);
+        auto shipCamera = CreateSimplePerspectiveCamera(30, 0.1f, 100, {0, 4, 15}, -15);
         shipCamera->SetClearColor(Color(111, 98, 139, 255));
         shipCamera->SetLayerMask(CameraLayer::Game);
 
@@ -38,8 +39,21 @@ namespace Jam {
         fontMaterial->SetColor(Color::white);
         fontMaterial->_transparent = true;
 
-        CreateCenteredText("Space Game", fontMaterial, sizeV / 2, 1.5f);
-        CreateCenteredText("Game by Ricardo Bustamante <ricardo@busta.dev>", fontMaterial, -sizeV + 1, 0.65f);
+        CreateCenteredText("Space Game", fontMaterial, {0, sizeV / 2 + 2}, 1.5f);
+        CreateCenteredText("Game by Ricardo Bustamante <ricardo@busta.dev>", fontMaterial, {0, -sizeV + 1}, 0.65f);
+
+        auto spacing = 6.0f;
+        auto fontSize = 0.65f;
+        auto shipModelY = -sizeV + 14;
+        auto shipInfoY = -sizeV + 6;
+
+        CreateCenteredText("Model: DPS9K+", fontMaterial, {-spacing, shipModelY}, 0.75f);
+        CreateCenteredText("Press [1] to select", fontMaterial, {-spacing, shipInfoY-1}, 0.65f);
+        CreateCenteredText("+atk -def", fontMaterial, {-spacing, shipInfoY}, 0.65f);
+
+        CreateCenteredText("Model: T4-NK", fontMaterial, {spacing, shipModelY}, 0.75f);
+        CreateCenteredText("Press [2] to select", fontMaterial, {spacing, shipInfoY-1}, 0.65f);
+        CreateCenteredText("+def -atk", fontMaterial, {spacing, shipInfoY}, 0.65f);
 
         std::map<std::string, MeshAsset *, std::less<>> meshCollection;
         if (!LoadFbxMeshAssets("assets/models/ships.fbx", meshCollection)) {
@@ -63,7 +77,11 @@ namespace Jam {
         smallShipRenderer->SetLayerMask(CameraLayer::Game);
         smallShipRenderer->SetMaterial(shipMaterial);
         smallShipRenderer->SetMesh(smallShipModel);
-        smallShip->transform.SetPosition({2,0,0});
+        auto smallShipLandingRenderer = smallShip->AddComponent<RendererComponent>();
+        smallShipLandingRenderer->SetLayerMask(CameraLayer::Game);
+        smallShipLandingRenderer->SetMaterial(shipMaterial);
+        smallShipLandingRenderer->SetMesh(shipLandingFoot);
+        smallShip->transform.SetPosition({-2, 0, 0});
 
         auto rotateSmall = smallShip->AddComponent<RotateAround>();
         rotateSmall->target = &smallShip->transform;
@@ -74,20 +92,27 @@ namespace Jam {
         bigShipRenderer->SetLayerMask(CameraLayer::Game);
         bigShipRenderer->SetMaterial(shipMaterial);
         bigShipRenderer->SetMesh(bigShipModel);
-        bigShip->transform.SetPosition({-2,0,0});
+        auto bigShipLandingRenderer = bigShip->AddComponent<RendererComponent>();
+        bigShipLandingRenderer->SetLayerMask(CameraLayer::Game);
+        bigShipLandingRenderer->SetMaterial(shipMaterial);
+        bigShipLandingRenderer->SetMesh(shipLandingFoot);
+        bigShip->transform.SetPosition({2, 0, 0});
 
         auto rotateBig = bigShip->AddComponent<RotateAround>();
         rotateBig->target = &bigShip->transform;
         rotateBig->speed = {0, 20, 0};
+
+        auto sceneManager = CreateObject("SceneManager");
+        sceneManager->AddComponent<MainMenuController>();
     }
 
-    Object *MainMenuScene::CreateCenteredText(const std::string &text, MaterialAsset *material, float y, float scale) {
+    Object *MainMenuScene::CreateCenteredText(const std::string &text, MaterialAsset *material, const Vector2 &pos, float scale) {
         auto textObject = CreateObject("Text");
         auto textRenderer = textObject->AddComponent<TextRendererComponent>();
         textRenderer->SetFontMaterial(material, 7, 9);
         textRenderer->SetText(text);
         textRenderer->SetLayerMask(CameraLayer::Ui);
-        textObject->transform.SetPosition({(scale * -textRenderer->GetSize().x) / 2, y});
+        textObject->transform.SetPosition({((scale * -textRenderer->GetSize().x) / 2)+pos.x, pos.y});
         textObject->transform.SetScale(scale);
 
         return textObject;

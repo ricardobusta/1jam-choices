@@ -16,7 +16,7 @@ namespace Jam {
         void Load(Application *application) override;
 
     private:
-        Object *CreateCenteredText(const std::string &text, MaterialAsset *material, float y, float scale);
+        Object *CreateCenteredText(const std::string &text, MaterialAsset *material, const Vector2 &pos, float scale);
     };
 }// namespace Jam
 

@@ -7,9 +7,8 @@
 
 #include "hge/component.h"
 
-using namespace Harpia;
 namespace Jam {
-    class InitGame : public Component {
+    class InitGame : public Harpia::Component {
     private:
         float _loadTime = 0;
 
