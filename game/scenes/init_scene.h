@@ -7,13 +7,11 @@
 
 #include "hge/scene.h"
 
-using namespace Harpia;
-
 namespace Jam {
     class InitScene : public Harpia::Scene {
         HARPIA_SCENE
     public:
-        void Load(Application *application) override;
+        void Load(Harpia::Application *application) override;
     };
 }// namespace Jam
 

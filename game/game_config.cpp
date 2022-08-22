@@ -5,12 +5,14 @@
 #include "game_config.h"
 #include "scenes/init_scene.h"
 #include "scenes/main_menu_scene.h"
+#include "scenes/game_scene.h"
 
 #include <SDL.h>
 
 namespace Jam {
     void GameConfig::Configure(Harpia::Configuration &configuration) {
         configuration.game.title = "Space Game";
+        configuration.game.frameRateCap = 30;
 
         configuration.window.position = Harpia::Vector2Int (2350, 000);
         configuration.window.overridePosition = true;
@@ -23,7 +25,8 @@ namespace Jam {
 
         configuration.game.scenes.insert(configuration.game.scenes.end(), {
                 new InitScene(),
-                new MainMenuScene()
+                new MainMenuScene(),
+                new GameScene(),
         });
     }
 } // Jam

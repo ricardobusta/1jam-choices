@@ -7,16 +7,14 @@
 
 #include "hge/scene.h"
 
-using namespace Harpia;
-
 namespace Jam {
-    class MainMenuScene : public Scene {
+    class MainMenuScene : public Harpia::Scene {
         HARPIA_SCENE
     public:
-        void Load(Application *application) override;
+        void Load(Harpia::Application *application) override;
 
     private:
-        Object *CreateCenteredText(const std::string &text, MaterialAsset *material, const Vector2 &pos, float scale);
+        Harpia::Object *CreateCenteredText(const std::string &text, Harpia::MaterialAsset *material, const Harpia::Vector2 &pos, float scale);
     };
 }// namespace Jam
 

@@ -3,10 +3,10 @@
 //
 
 #include "init_scene.h"
-#include "hge/camera_component.h"
 #include "hge/assets.h"
-#include "hge/text_renderer_component.h"
 #include "init_game.h"
+
+using namespace Harpia;
 
 namespace Jam {
     void InitScene::Load(Application *application) {

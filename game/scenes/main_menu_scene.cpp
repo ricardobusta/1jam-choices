@@ -6,10 +6,10 @@
 
 #include "hge/application.h"
 #include "hge/assets.h"
-#include "hge/camera_component.h"
-#include "hge/text_renderer_component.h"
 #include "rotate_around.h"
 #include "main_menu_controller.h"
+
+using namespace Harpia;
 
 enum CameraLayer : int {
     Ui = 1 << 0,
@@ -19,15 +19,13 @@ enum CameraLayer : int {
 namespace Jam {
     void MainMenuScene::Load(Application *application) {
         auto sizeV = 10.0f;
-        auto aspect = application->GetScreenAspect();
-        auto sizeH = sizeV * aspect;
 
-        auto shipCamera = CreateSimplePerspectiveCamera(30, 0.1f, 100, {0, 4, 15}, -15);
-        shipCamera->SetClearColor(Color(111, 98, 139, 255));
-        shipCamera->SetLayerMask(CameraLayer::Game);
+        auto gameCamera = CreateSimplePerspectiveCamera(30, 0.1f, 100, {0, 4, 15}, -15);
+        gameCamera->SetClearColor(Color(111, 98, 139, 255));
+        gameCamera->SetLayerMask(CameraLayer::Game);
 
         auto uiCamera = CreateSimpleOrthoCamera(sizeV);
-        uiCamera->SetClearType(Harpia::CameraClearType::Depth);
+        uiCamera->SetClearType(CameraClearType::Depth);
         uiCamera->SetClearColor(Color{0, 0, 0, 0});
         uiCamera->SetLayerMask(CameraLayer::Ui);
 
@@ -47,13 +45,13 @@ namespace Jam {
         auto shipModelY = -sizeV + 14;
         auto shipInfoY = -sizeV + 6;
 
-        CreateCenteredText("Model: DPS9K+", fontMaterial, {-spacing, shipModelY}, 0.75f);
-        CreateCenteredText("Press [1] to select", fontMaterial, {-spacing, shipInfoY-1}, 0.65f);
-        CreateCenteredText("+atk -def", fontMaterial, {-spacing, shipInfoY}, 0.65f);
+        CreateCenteredText("Model: DPS9K+", fontMaterial, {-spacing, shipModelY}, fontSize*1.1f);
+        CreateCenteredText("Press [1] to select", fontMaterial, {-spacing, shipInfoY-1}, fontSize);
+        CreateCenteredText("+atk -def", fontMaterial, {-spacing, shipInfoY}, fontSize);
 
-        CreateCenteredText("Model: T4-NK", fontMaterial, {spacing, shipModelY}, 0.75f);
-        CreateCenteredText("Press [2] to select", fontMaterial, {spacing, shipInfoY-1}, 0.65f);
-        CreateCenteredText("+def -atk", fontMaterial, {spacing, shipInfoY}, 0.65f);
+        CreateCenteredText("Model: T4-NK", fontMaterial, {spacing, shipModelY}, fontSize*1.1f);
+        CreateCenteredText("Press [2] to select", fontMaterial, {spacing, shipInfoY-1}, fontSize);
+        CreateCenteredText("+def -atk", fontMaterial, {spacing, shipInfoY}, fontSize);
 
         std::map<std::string, MeshAsset *, std::less<>> meshCollection;
         if (!LoadFbxMeshAssets("assets/models/ships.fbx", meshCollection)) {
