@@ -4,6 +4,7 @@
 
 #include "game_scene.h"
 
+#include "player_controller.h"
 #include "static_data.h"
 
 using namespace Harpia;
@@ -17,8 +18,8 @@ namespace Jam {
     void GameScene::Load(Application *application) {
         auto sizeV = 10.0f;
 
-        auto gameCamera = CreateSimplePerspectiveCamera(30, 0.1f, 100, {0, -20, 45}, 35);
-        gameCamera->SetClearColor(Color(111, 98, 139, 255));
+        auto gameCamera = CreateSimplePerspectiveCamera(20, 0.1f, 1000, {0, -20, 90}, 15);
+        gameCamera->SetClearColor(Color(0, 10, 10, 255));
         gameCamera->SetLayerMask(CameraLayer::Game);
 
         auto uiCamera = CreateSimpleOrthoCamera(sizeV);
@@ -44,6 +45,7 @@ namespace Jam {
         shipMaterial->SetColor(Color::white);
 
         auto player = CreateObject("Player");
+        player->AddComponent<PlayerController>();
 
         auto playerShip = CreateObject("PlayerShip");
         auto smallShipRenderer = playerShip->AddComponent<RendererComponent>();

@@ -5,4 +5,11 @@
 #include "game_controller.h"
 
 namespace Jam {
+    void GameController::Start() {
+        Component::Start();
+    }
+
+    void GameController::Update() {
+        Component::Update();
+    }
 }// namespace Jam
