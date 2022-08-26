@@ -8,11 +8,15 @@
 #include "hge/component.h"
 
 namespace Jam {
+    class GameController;
+
     class PlayerController : public Harpia::Component {
     public:
         float angleDelta = 230.0f;
         float maxAngle = 40.0f;
         float speed = 20.0f;
+
+        GameController *gameController;
     private:
         Harpia::Transform *_playerTransform = nullptr;
         float _angle = 0;

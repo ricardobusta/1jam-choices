@@ -3,6 +3,7 @@
 //
 
 #include "game_controller.h"
+#include "hge/scene.h"
 
 namespace Jam {
     void GameController::Start() {
@@ -11,5 +12,18 @@ namespace Jam {
 
     void GameController::Update() {
         Component::Update();
+    }
+
+    void GameController::OnPlayerShoot() {
+        ProjectileController *p;
+        if(_projectilePool.Empty()){
+            auto po = CreateObject("Projectile");
+            p = po->AddComponent<ProjectileController>();
+            p->Initialize();
+        }else{
+            p = _projectilePool.Pop();
+        }
+
+        _projectiles.push_back(p);
     }
 }// namespace Jam

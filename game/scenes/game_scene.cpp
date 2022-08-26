@@ -6,6 +6,7 @@
 
 #include "player_controller.h"
 #include "static_data.h"
+#include "game_controller.h"
 
 using namespace Harpia;
 
@@ -44,8 +45,12 @@ namespace Jam {
         shipMaterial->SetTexture(shipTexture);
         shipMaterial->SetColor(Color::white);
 
+        auto gameControllerObject = CreateObject("GameController");
+        auto gameController = gameControllerObject->AddComponent<GameController>();
+
         auto player = CreateObject("Player");
-        player->AddComponent<PlayerController>();
+        auto playerController = player->AddComponent<PlayerController>();
+        playerController->gameController = gameController;
 
         auto playerShip = CreateObject("PlayerShip");
         auto smallShipRenderer = playerShip->AddComponent<RendererComponent>();
