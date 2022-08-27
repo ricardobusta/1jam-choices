@@ -41,7 +41,7 @@ namespace Jam {
 
         if (Input()->GetKeyIsDown(SDLK_SPACE) && _shootCooldown <= 0) {
             DebugLog("Pew");
-            gameController->OnPlayerShoot(pos);
+            gameController->OnPlayerShoot(pos + Vector3{0, shootOffset, 0});
             _shootCooldown = shootMaxCooldown;
         }
 

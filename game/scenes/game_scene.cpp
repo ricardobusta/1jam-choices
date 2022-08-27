@@ -45,13 +45,23 @@ namespace Jam {
         shipMaterial->SetTexture(shipTexture);
         shipMaterial->SetColor(Color::white);
 
+        auto transparentMaterial = LoadMaterialAsset(defaultShader);
+        transparentMaterial->SetTexture(shipTexture);
+        transparentMaterial->SetColor(Color::white);
+        transparentMaterial->_transparent = true;
+
         auto projectileModel = meshCollection["BulletSmallBlue"];
 
         auto gameControllerObject = CreateObject("GameController");
         auto gameController = gameControllerObject->AddComponent<GameController>();
         gameController->projectileMesh = projectileModel;
-        gameController->projectileMaterial = shipMaterial;
+        gameController->projectileMaterial = transparentMaterial;
         gameController->layerMask = CameraLayer::Game;
+        auto music = gameControllerObject->AddComponent<MusicComponent>();
+        auto gameMusic = LoadMusicAsset("assets/music/space_fighter_loop.mp3");
+        music->SetVolume(0.5f);
+        music->SetMusic(gameMusic);
+        music->Play();
 
         auto player = CreateObject("Player");
         auto playerController = player->AddComponent<PlayerController>();

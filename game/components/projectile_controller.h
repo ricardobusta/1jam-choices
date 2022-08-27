@@ -11,13 +11,11 @@ namespace Jam {
     class GameController;
 
     class ProjectileController : public Harpia::Component {
-    private:
-        GameController *_gameController = nullptr;
-        float _lifeTime;
-
     public:
-        void Initialize(GameController *controller, float lifeTime, const Harpia::Vector3 &pos, Harpia::MeshAsset *mesh, Harpia::MaterialAsset *material, int layerMask);
-        void Update() override;
+        float lifeTime;
+
+        void Restart();
+        void Initialize(float lifeTime, const Harpia::Vector3 &pos, Harpia::MeshAsset *mesh, Harpia::MaterialAsset *material, int layerMask);
     };
 }// namespace Jam
 

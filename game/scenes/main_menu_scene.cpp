@@ -102,6 +102,13 @@ namespace Jam {
 
         auto sceneManager = CreateObject("SceneManager");
         sceneManager->AddComponent<MainMenuController>();
+
+        auto music = sceneManager->AddComponent<MusicComponent>();
+        auto gameMusic = LoadMusicAsset("assets/music/dark_star.mp3");
+        music->SetVolume(1.0f);
+        music->SetMusic(gameMusic);
+        music->Play();
+        music->SetPosition(1.6f);
     }
 
     Object *MainMenuScene::CreateCenteredText(const std::string &text, MaterialAsset *material, const Vector2 &pos, float scale) {

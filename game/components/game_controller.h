@@ -10,6 +10,7 @@
 #include "hge/pool.h"
 #include "projectile_controller.h"
 #include "hge/harpia_math.h"
+#include <memory>
 
 namespace Jam {
     class GameController : public Harpia::Component {
@@ -30,6 +31,10 @@ namespace Jam {
         void Update() override;
 
         void OnPlayerShoot(const Harpia::Vector3 &pos);
+        void OnProjectileDestroyed(ProjectileController* projectile);
+
+    private:
+        void UpdateProjectiles();
     };
 }// namespace Jam
 
