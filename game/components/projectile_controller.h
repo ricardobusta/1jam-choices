@@ -8,9 +8,16 @@
 #include "hge/component.h"
 
 namespace Jam {
+    class GameController;
+
     class ProjectileController : public Harpia::Component {
+    private:
+        GameController *_gameController = nullptr;
+        float _lifeTime;
+
     public:
-        void Initialize();
+        void Initialize(GameController *controller, float lifeTime, const Harpia::Vector3 &pos, Harpia::MeshAsset *mesh, Harpia::MaterialAsset *material, int layerMask);
+        void Update() override;
     };
 }// namespace Jam
 

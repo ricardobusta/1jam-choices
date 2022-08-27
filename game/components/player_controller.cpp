@@ -3,6 +3,7 @@
 //
 
 #include "player_controller.h"
+#include "game_controller.h"
 #include "hge/harpia_math.h"
 
 using namespace Harpia;
@@ -15,6 +16,11 @@ namespace Jam {
 
     void PlayerController::Update() {
         auto dt = Time()->deltaTime;
+
+        if (_shootCooldown > 0) {
+            _shootCooldown -= dt;
+        }
+
         auto x = Input()->GetButtonAxis(SDLK_d, SDLK_a);
         if (x == 0) {
             x = Input()->GetButtonAxis(SDLK_RIGHT, SDLK_LEFT);
@@ -31,7 +37,13 @@ namespace Jam {
         CalculateAngle(dt, x);
 
         _playerTransform->SetPosition(pos);
-        _playerTransform->SetRotation(_angle * Math::Deg2Rad, {0, 1, 0});
+        _playerTransform->SetRotation(_angle * Math::Deg2Rad,  Vector<3>::up);
+
+        if (Input()->GetKeyIsDown(SDLK_SPACE) && _shootCooldown <= 0) {
+            DebugLog("Pew");
+            gameController->OnPlayerShoot(pos);
+            _shootCooldown = shootMaxCooldown;
+        }
 
         if (Input()->GetKeyDown(SDLK_ESCAPE)) {
             SceneManager()->LoadScene(1);

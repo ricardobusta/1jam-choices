@@ -4,9 +4,9 @@
 
 #include "game_scene.h"
 
+#include "game_controller.h"
 #include "player_controller.h"
 #include "static_data.h"
-#include "game_controller.h"
 
 using namespace Harpia;
 
@@ -45,8 +45,13 @@ namespace Jam {
         shipMaterial->SetTexture(shipTexture);
         shipMaterial->SetColor(Color::white);
 
+        auto projectileModel = meshCollection["BulletSmallBlue"];
+
         auto gameControllerObject = CreateObject("GameController");
         auto gameController = gameControllerObject->AddComponent<GameController>();
+        gameController->projectileMesh = projectileModel;
+        gameController->projectileMaterial = shipMaterial;
+        gameController->layerMask = CameraLayer::Game;
 
         auto player = CreateObject("Player");
         auto playerController = player->AddComponent<PlayerController>();
@@ -57,9 +62,11 @@ namespace Jam {
         smallShipRenderer->SetLayerMask(CameraLayer::Game);
         smallShipRenderer->SetMaterial(shipMaterial);
         smallShipRenderer->SetMesh(shipModel);
-        playerShip->transform.SetPosition({0, 0, 0});
-        playerShip->transform.SetRotation(180 * Math::Deg2Rad, {0, 1, 0});
-        playerShip->transform.Rotate(-90 * Math::Deg2Rad, {1, 0, 0});
+        playerShip->transform.SetPosition(Vector<3>::zero);
+        playerShip->transform.SetRotation(180 * Math::Deg2Rad, Vector<3>::up);
+        playerShip->transform.Rotate(-90 * Math::Deg2Rad, Vector<3>::right);
         playerShip->transform.SetParent(&player->transform);
+
+        gameController->playerRotation = playerShip->transform.GetRotation();
     }
 }// namespace Jam

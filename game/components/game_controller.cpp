@@ -5,6 +5,8 @@
 #include "game_controller.h"
 #include "hge/scene.h"
 
+using namespace Harpia;
+
 namespace Jam {
     void GameController::Start() {
         Component::Start();
@@ -14,13 +16,14 @@ namespace Jam {
         Component::Update();
     }
 
-    void GameController::OnPlayerShoot() {
+    void GameController::OnPlayerShoot(const Vector3 &pos) {
         ProjectileController *p;
-        if(_projectilePool.Empty()){
+        if (_projectilePool.Empty()) {
             auto po = CreateObject("Projectile");
             p = po->AddComponent<ProjectileController>();
-            p->Initialize();
-        }else{
+            p->Initialize(this, 2, pos, projectileMesh, projectileMaterial, layerMask);
+            po->transform.SetRotation(playerRotation);
+        } else {
             p = _projectilePool.Pop();
         }
 

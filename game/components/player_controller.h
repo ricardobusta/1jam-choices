@@ -15,11 +15,15 @@ namespace Jam {
         float angleDelta = 230.0f;
         float maxAngle = 40.0f;
         float speed = 20.0f;
+        float shootMaxCooldown = 0.3f;
+        float shootOffset = 1.5f;
 
         GameController *gameController;
     private:
         Harpia::Transform *_playerTransform = nullptr;
         float _angle = 0;
+
+        float _shootCooldown = 0;
     public:
         void Start() override;
         void Update() override;
