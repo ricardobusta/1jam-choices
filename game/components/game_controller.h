@@ -11,6 +11,7 @@
 #include "projectile_controller.h"
 #include "hge/harpia_math.h"
 #include <memory>
+#include "hge/audio_component.h"
 
 namespace Jam {
     class GameController : public Harpia::Component {
@@ -19,6 +20,9 @@ namespace Jam {
         Harpia::MeshAsset *projectileMesh = nullptr;
         int layerMask = 0;
         Harpia::Quaternion playerRotation;
+
+        Harpia::AudioComponent *audioComponent = nullptr;
+        Harpia::AudioAsset *playerShootAudio = nullptr;
 
     private:
         std::list<ProjectileController *> _projectiles;

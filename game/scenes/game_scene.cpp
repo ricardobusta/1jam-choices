@@ -63,6 +63,9 @@ namespace Jam {
         music->SetMusic(gameMusic);
         music->Play();
 
+        auto pewAudio = LoadAudioAsset("assets/sfx/pew.wav");
+        gameController->playerShootAudio = pewAudio;
+
         auto player = CreateObject("Player");
         auto playerController = player->AddComponent<PlayerController>();
         playerController->gameController = gameController;

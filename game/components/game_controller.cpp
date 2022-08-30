@@ -9,7 +9,7 @@ using namespace Harpia;
 
 namespace Jam {
     void GameController::Start() {
-        Component::Start();
+        audioComponent = GetObject()->AddComponent<AudioComponent>();
     }
 
     void GameController::Update() {
@@ -19,17 +19,17 @@ namespace Jam {
     void GameController::OnPlayerShoot(const Vector3 &pos) {
         ProjectileController *p;
         if (_projectilePool.Empty()) {
-            DebugLog("Creating new projectile");
             auto po = CreateObject("Projectile");
             p = po->AddComponent<ProjectileController>();
             p->Initialize(2, pos, projectileMesh, projectileMaterial, layerMask);
             po->transform.SetRotation(playerRotation);
         } else {
-            DebugLog("Getting projectile from pool %d", _projectilePool.Size());
             p = _projectilePool.Pop();
             p->Initialize(2, pos, projectileMesh, projectileMaterial, layerMask);
             p->GetObject()->SetEnabled(true);
         }
+        audioComponent->SetAudio(playerShootAudio);
+        audioComponent->Play();
         _projectiles.push_back(p);
     }
 
@@ -47,7 +47,7 @@ namespace Jam {
                 return;
             }
 
-            p->GetObject()->transform.Translate({0, 10 * Time()->deltaTime, 0});
+            p->GetObject()->transform.Translate({0, p->speed * Time()->deltaTime, 0});
         }
     }
 }// namespace Jam

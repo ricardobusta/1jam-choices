@@ -40,7 +40,6 @@ namespace Jam {
         _playerTransform->SetRotation(_angle * Math::Deg2Rad,  Vector<3>::up);
 
         if (Input()->GetKeyIsDown(SDLK_SPACE) && _shootCooldown <= 0) {
-            DebugLog("Pew");
             gameController->OnPlayerShoot(pos + Vector3{0, shootOffset, 0});
             _shootCooldown = shootMaxCooldown;
         }
